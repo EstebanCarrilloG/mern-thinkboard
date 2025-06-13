@@ -1,8 +1,22 @@
 import Note from "../models/Note.js";
-export async function getAllNotes(req, res) {
+export async function getAllNotes(_, res) {
   try {
-    const notes = await Note.find();
+    const notes = await Note.find().sort({createdAt: -1});
     res.status(200).json(notes);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+export async function getSingleNote(req, res) {
+  try {
+    const { id } = req.params;
+
+    const note = await Note.findById(id);
+    if (!note) return res.status(404).json({ message: "Note not found" });
+
+    res.json(note);
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
@@ -50,7 +64,8 @@ export async function deleteNote(req, res) {
     const { id } = req.params;
     const deletedNote = await Note.findByIdAndDelete(id);
 
-    if (!deletedNote) return res.status(404).json({ message: "Note not found" });
+    if (!deletedNote)
+      return res.status(404).json({ message: "Note not found" });
 
     res.json(deletedNote);
   } catch (error) {
