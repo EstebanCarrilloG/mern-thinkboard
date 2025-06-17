@@ -6,7 +6,7 @@ import NoteDetailPage from "./pages/NoteDetailPage";
 
 function App() {
   return (
-    <div>
+    <div className="max-w-6xl m-auto p-5">
       <Routes>
         <Route path="/" element ={<HomePage/>} />
         <Route path="/create" element ={<CreatePage/>}/>

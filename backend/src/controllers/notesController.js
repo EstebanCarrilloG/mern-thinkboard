@@ -1,11 +1,11 @@
 import Note from "../models/Note.js";
 export async function getAllNotes(_, res) {
   try {
-    const notes = await Note.find().sort({createdAt: -1});
+    const notes = await Note.find().sort({ createdAt: -1 });
     res.status(200).json(notes);
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
@@ -19,7 +19,7 @@ export async function getSingleNote(req, res) {
     res.json(note);
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
@@ -33,7 +33,7 @@ export async function createNote(req, res) {
     res.status(201).json(newNote);
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
@@ -55,7 +55,7 @@ export async function editNote(req, res) {
     res.status(201).json(updatedNote);
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
 
@@ -70,6 +70,6 @@ export async function deleteNote(req, res) {
     res.json(deletedNote);
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
