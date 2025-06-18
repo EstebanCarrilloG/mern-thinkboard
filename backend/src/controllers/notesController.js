@@ -43,6 +43,8 @@ export async function editNote(req, res) {
     console.log(id);
     const { title, content } = req.body;
 
+    if (title === "" || content === "")
+      throw new error("Title and content fields should not be empty.");
     const updatedNote = await Note.findByIdAndUpdate(
       id,
       { title, content },

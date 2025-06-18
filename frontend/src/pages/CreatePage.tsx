@@ -14,7 +14,10 @@ const CreatePage = () => {
 
   const handdleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !content) return toast.error("All fields are required");
+    if (!title || !content) {
+      toast.error("All fields are required");
+      return;
+    }
     startTransition(async () => {
       try {
         const res = await api.post("/notes", {
@@ -24,7 +27,10 @@ const CreatePage = () => {
         toast.success("Note created successfully");
         if (res.status === 201) navigate("/");
       } catch (error) {
-        if (error instanceof AxiosError) toast.error(error.message);
+        if (error instanceof AxiosError) {
+          if (error.status === 429) toast.error("Rate limit exceeded");
+        }
+        toast.error("Failed to create note");
       }
     });
   };
